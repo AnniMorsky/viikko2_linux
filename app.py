@@ -23,6 +23,10 @@ def home():
         hits = row[0] + 1
         cursor.execute("UPDATE counter SET hits = %s WHERE id = 1", (hits,))
 
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
     return f"""
     <!DOCTYPE html>
     <html lang="fi">
@@ -48,13 +52,16 @@ def home():
                 <li>Testin tulos: Gunicorn-palvelu ja MySQL-tietokanta on määritetty käynnistymään automaattisesti järjestelmän mukana. Palvelimen uudelleenkäynnistyksen jälkeen laskurin lukema säilyi tietokannassa ja sovellus jatkoi toimintaansa ilman katkoksia.</li>
             </ul>
         </div>
+        <a
+            href='https://github.com/AnniMorsky/viikko2_linux'
+            target='_blank'
+            rel='noreferrer noopener nofollow'
+        >
+            Github-repository
+        </a>
     </body>
     </html>
     """
-    conn.commit()
-    cursor.close()
-    conn.close()
-    
-    return f"<h1>Sivustolla käyty: {hits} kertaa</h1>"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
